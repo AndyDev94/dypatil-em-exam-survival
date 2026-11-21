@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Mechanics (EM) Exam Survival Hub — D.Y. Patil University</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .katex-display { margin: 0.5em 0 !important; overflow-x: auto; overflow-y: hidden; padding-bottom: 2px; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans antialiased transition-colors duration-200">
+
+  <!-- TOP ALERT BAR -->
+  <div class="bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 text-white text-xs sm:text-sm font-semibold py-2 px-4 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="animate-pulse">🚨</span>
+        <span><b>EM EXAM TOMORROW:</b> Zero Prep? Study the <b>10 "Must-Pass" Questions</b> first to lock in 45+ Marks!</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="bg-white/20 px-2 py-0.5 rounded text-xs">D.Y. Patil University • Sem II</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY HEADER -->
+  <header class="sticky top-0 z-30 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+      <div class="flex items-center justify-between gap-4">
+        <div>
+          <h1 class="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent flex items-center gap-2">
+            <span>⚙️</span> Engineering Mechanics Exam Hub
+          </h1>
+          <p class="text-xs text-slate-400">25 PYQ Solved Questions • Syllabus Modules 01 to 06</p>
+        </div>
+
+        <!-- ACTIONS & PROGRESS -->
+        <div class="flex items-center gap-3">
+          <!-- Progress pill -->
+          <div class="hidden md:flex items-center gap-2 bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-full text-xs">
+            <span class="text-slate-400">Mastered:</span>
+            <span id="progress-text" class="font-bold text-amber-400">0 / 25</span>
+            <div class="w-16 h-2 bg-slate-700 rounded-full overflow-hidden">
+              <div id="progress-bar" class="h-full bg-gradient-to-r from-amber-400 to-emerald-400 transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Quick Cheatsheet Modal Button -->
+          <button onclick="toggleModal('cheatsheet-modal')" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium flex items-center gap-1.5 shadow-sm transition">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            <span>Formula Sheet</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- FILTER PILLS & SEARCH -->
+      <div class="mt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2 border-t border-slate-800">
+        <!-- Filter Tabs -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs no-scrollbar">
+          <button onclick="setFilter('all')" id="btn-all" class="filter-btn px-3 py-1 rounded-full font-medium transition bg-blue-600 text-white">All (25)</button>
+          <button onclick="setFilter('mustPass')" id="btn-mustPass" class="filter-btn px-3 py-1 rounded-full font-medium transition bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 flex items-center gap-1">
+            <span>⚡ Top 10 Must-Pass</span>
+          </button>
+          <button onclick="setFilter(1)" id="btn-1" class="filter-btn px-3 py-1 rounded-full font-medium transition bg-slate-800 hover:bg-slate-700 text-slate-300">Mod 1</button>
+          <button onclick="setFilter(2)" id="btn-2" class="filter-btn px-3 py-1 rounded-full font-medium transition bg-slate-800 hover:bg-slate-700 text-slate-300">Mod 2</button>
+          <button onclick="setFilter(3)" id="btn-3" class="filter-btn px-3 py-1 rounded-full font-medium transition bg-slate-800 hover:bg-slate-700 text-slate-300">Mod 3</button>
+          <button onclick="setFilter(4)" id="btn-4" class="filter-btn px-3 py-1 rounded-full font-medium transition bg-slate-800 hover:bg-slate-700 text-slate-300">Mod 4</button>
+          <button onclick="setFilter(5)" id="btn-5" class="filter-btn px-3 py-1 rounded-full font-medium transition bg-slate-800 hover:bg-slate-700 text-slate-300">Mod 5</button>
+          <button onclick="setFilter(6)" id="btn-6" class="filter-btn px-3 py-1 rounded-full font-medium transition bg-slate-800 hover:bg-slate-700 text-slate-300">Mod 6</button>
+        </div>
+
+        <!-- Search Input -->
+        <div class="relative w-full sm:w-64">
+          <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5"></i>
+          <input type="text" id="search-input" oninput="handleSearch()" placeholder="Search wedge, lami, centroid..." class="w-full bg-slate-800 text-slate-100 text-xs pl-8 pr-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+    <!-- HERO / PASS STRATEGY CARD -->
+    <div class="bg-gradient-to-br from-slate-800/80 to-slate-900 border border-slate-700/80 rounded-2xl p-4 sm:p-6 shadow-xl relative overflow-hidden">
+      <div class="absolute -right-8 -top-8 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Last-Night Cramming Strategy</span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-white mt-1">How to Pass with Distinction Starting Tonight</h2>
+          <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+            D.Y. Patil University EM papers strictly test <b>templates</b>. Step marking gives you <b>60–80% marks</b> even if your final answer has minor calculation mistakes!
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <div class="bg-slate-800 border border-slate-700 rounded-xl p-3 text-center min-w-[100px]">
+            <div class="text-xs text-slate-400">FBD Sketch</div>
+            <div class="text-lg font-bold text-emerald-400">+2 to 3 M</div>
+          </div>
+          <div class="bg-slate-800 border border-slate-700 rounded-xl p-3 text-center min-w-[100px]">
+            <div class="text-xs text-slate-400">Equations</div>
+            <div class="text-lg font-bold text-blue-400">ΣF=0, ΣM=0</div>
+          </div>
+          <div class="bg-slate-800 border border-slate-700 rounded-xl p-3 text-center min-w-[100px]">
+            <div class="text-xs text-slate-400">Total Solved</div>
+            <div class="text-lg font-bold text-amber-400">25 PYQs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESTIONS GRID -->
+    <div id="questions-container" class="space-y-4">
+      <!-- Dynamic Question Cards Generated by JS -->
+    </div>
+
+  </main>
+
+  <!-- FORMULA SHEET MODAL -->
+  <div id="cheatsheet-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-4xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="book-open" class="w-5 h-5 text-blue-400"></i>
+          <h3 class="text-lg font-bold text-white">Emergency Formula Cheatsheet</h3>
+        </div>
+        <button onclick="toggleModal('cheatsheet-modal')" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <!-- Modal Content -->
+      <div class="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm text-slate-300">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+            <h4 class="font-bold text-blue-400 mb-2">Module 1: Coplanar Forces & Centroid</h4>
+            <p>• Resultant: $R = \sqrt{(\sum F_x)^2 + (\sum F_y)^2}$</p>
+            <p>• Angle: $\theta = \tan^{-1}\left(\frac{|\sum F_y|}{|\sum F_x|}\right)$</p>
+            <p>• Varignon's Theorem: $R \times d = \sum M_A$</p>
+            <p>• Centroid: $\bar{x} = \frac{\sum A_i x_i}{\sum A_i}, \quad \bar{y} = \frac{\sum A_i y_i}{\sum A_i}$</p>
+            <p>• Semicircle centroid from base: $y = \frac{4R}{3\pi}$</p>
+          </div>
+          <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+            <h4 class="font-bold text-emerald-400 mb-2">Module 2: Equilibrium & Beams</h4>
+            <p>• Equilibrium: $\sum F_x = 0, \; \sum F_y = 0, \; \sum M = 0$</p>
+            <p>• Lami's Theorem: $\frac{F_1}{\sin \alpha} = \frac{F_2}{\sin \beta} = \frac{F_3}{\sin \gamma}$</p>
+            <p>• UDL load: $W = w \times L$ at midpoint $L/2$</p>
+            <p>• UVL load: $W = \frac{1}{2} w L$ at $2/3 L$ from zero-vertex</p>
+          </div>
+          <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+            <h4 class="font-bold text-amber-400 mb-2">Module 3: Friction & Wedges</h4>
+            <p>• Friction: $F_s = \mu N$ (opposes relative motion)</p>
+            <p>• Angle of friction: $\tan \phi = \mu$</p>
+            <p>• Angle of Repose: $\theta = \phi$</p>
+            <p>• Tipping vs Slipping: $P_{\text{slip}} = \mu W$ vs $P_{\text{tip}} = W(b/2)/h$</p>
+          </div>
+          <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+            <h4 class="font-bold text-purple-400 mb-2">Module 4: Kinematics of Particle</h4>
+            <p>• $v = u + at, \quad s = ut + \frac{1}{2}at^2, \quad v^2 = u^2 + 2as$</p>
+            <p>• Variable acceleration: $s = \int v dt, \quad v = \int a dt$</p>
+            <p>• Projectile Trajectory: $y = x\tan\theta - \frac{gx^2}{2u^2\cos^2\theta}$</p>
+            <p>• $u_x = u\cos\theta, \; u_y = u\sin\theta$</p>
+          </div>
+          <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+            <h4 class="font-bold text-rose-400 mb-2">Module 5: Rigid Body & ICR</h4>
+            <p>• Velocity at point P: $v_P = \omega \times (IP)$</p>
+            <p>• Angular velocity: $\omega = \frac{v_A}{IA} = \frac{v_B}{IB}$</p>
+            <p>• Slider crank: draw $\perp$ to $v_A$ and vertical $\perp$ to $v_B$ to find ICR</p>
+          </div>
+          <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700">
+            <h4 class="font-bold text-sky-400 mb-2">Module 6: Kinetics & D'Alembert's</h4>
+            <p>• D'Alembert's: $\sum F - ma = 0$ (Inertia force $F_i = -ma$)</p>
+            <p>• Elevator upward: $T = m(g + a)$</p>
+            <p>• Elevator downward: $T = m(g - a)$</p>
+            <p>• Block on incline: $a = g(\sin\theta - \mu\cos\theta)$</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="mt-12 py-6 text-center text-xs text-slate-500 border-t border-slate-800">
+    <p>Good luck with your Engineering Mechanics exam tomorrow! You've got this. 🚀</p>
+  </footer>
+
+  <script>
+    const questionsData = [{"id": 1, "module": 1, "moduleName": "Module 01: Coplanar Forces & Centroid", "title": "Resultant of Parallel Forces & Location w.r.t Point A", "pyq": "KT 2024 (Q.1.a) / Nov 2025", "marks": "5 Marks", "mustPass": true, "problem": "A system of parallel forces acts on a beam of length 12 m:<br>\u2022 At point A (x = 0): 200 N (down)<br>\u2022 At x = 3 m: 500 N (up)<br>\u2022 At x = 7.5 m: 350 N (down)<br>\u2022 At x = 10 m: 150 N (up)<br>\u2022 At x = 12 m: 200 N (up)<br>Determine the resultant force in magnitude and direction, and locate it with respect to point A.", "intuition": "Parallel forces can be directly added (+ for upward, - for downward). Then use Varignon's Theorem (Moment of resultant = Sum of moments of individual forces) to pinpoint its position.", "steps": [{"title": "Step 1: Calculate Resultant Force (R)", "content": "$$R = \\sum F_y = -200 + 500 - 350 + 150 + 200 = +300\\text{ N} \\quad (\\uparrow \\text{ Upward})$$"}, {"title": "Step 2: Calculate Sum of Moments about Point A (\\sum M_A)", "content": "Taking Counter-Clockwise (CCW) as positive (+):<br>\u2022 At A: $200 \\times 0 = 0$<br>\u2022 At 3 m: $+ (500 \\times 3) = +1500\\text{ N}\\cdot\\text{m}$ (CCW)<br>\u2022 At 7.5 m: $- (350 \\times 7.5) = -2625\\text{ N}\\cdot\\text{m}$ (CW)<br>\u2022 At 10 m: $+ (150 \\times 10) = +1500\\text{ N}\\cdot\\text{m}$ (CCW)<br>\u2022 At 12 m: $+ (200 \\times 12) = +2400\\text{ N}\\cdot\\text{m}$ (CCW)<br>$$\\sum M_A = +1500 - 2625 + 1500 + 2400 = +2775\\text{ N}\\cdot\\text{m} \\quad (\\text{CCW})$$"}, {"title": "Step 3: Apply Varignon's Theorem to locate R", "content": "$$R \\times \\bar{x} = \\sum M_A$$$$300 \\times \\bar{x} = 2775 \\implies \\mathbf{\\bar{x} = \\frac{2775}{300} = 9.25\\text{ m to the right of A}}$$"}], "answer": "Resultant R = 300 N (upward) acting at distance x = 9.25 m from point A.", "trap": "Always clearly define your moment sign convention (e.g., CCW positive) right at the start of your solution to avoid minus sign errors."}, {"id": 2, "module": 1, "moduleName": "Module 01: Coplanar Forces & Centroid", "title": "Concurrent Forces in Equilibrium (Find Unknown Forces P and Q)", "pyq": "Nov 2025 (Q.2.A)", "marks": "5 Marks", "mustPass": true, "problem": "Five coplanar concurrent forces act at the origin such that their resultant is zero:<br>1. 30 N along negative x-axis (left)<br>2. 50 N along positive y-axis (up)<br>3. 40 N in 1st quadrant at 60\u00b0 to positive x-axis<br>4. Force P along negative y-axis (down)<br>5. Force Q in 4th quadrant at 20\u00b0 below positive x-axis<br>Find the values of P and Q.", "intuition": "For concurrent equilibrium, the algebraic sum of horizontal forces (\\sum F_x) and vertical forces (\\sum F_y) must separately equal zero.", "steps": [{"title": "Step 1: Resolve Horizontally (\\sum F_x = 0)", "content": "$$40 \\cos 60^\\circ + Q \\cos 20^\\circ - 30 = 0$$$$40(0.5) + Q(0.9397) - 30 = 0 \\implies 20 + 0.9397 Q = 30$$$$0.9397 Q = 10 \\implies \\mathbf{Q = \\frac{10}{0.9397} \\approx 10.64\\text{ N}}$$"}, {"title": "Step 2: Resolve Vertically (\\sum F_y = 0)", "content": "$$50 + 40 \\sin 60^\\circ - P - Q \\sin 20^\\circ = 0$$$$50 + 40(0.8660) - P - 10.64(0.3420) = 0$$$$50 + 34.64 - P - 3.64 = 0 \\implies 81.00 - P = 0$$$$\\mathbf{P = 81.00\\text{ N}}$$"}], "answer": "P = 81.00 N,  Q = 10.64 N", "trap": "Notice Q is in the 4th quadrant: its x-component is positive (+Q cos 20\u00b0) but its y-component is negative (-Q sin 20\u00b0)."}, {"id": 3, "module": 1, "moduleName": "Module 01: Coplanar Forces & Centroid", "title": "Non-Concurrent Force System with Couple Moment", "pyq": "May 2026 (Q.1.a)", "marks": "4 Marks", "mustPass": false, "problem": "A horizontal bar has loads:<br>\u2022 At A (x = 0): 200 N (down)<br>\u2022 At x = 2 m: 50 N (up)<br>\u2022 At x = 4 m: Couple moment of 80 N\u00b7m (CCW)<br>\u2022 At x = 6 m: 100 N inclined at slope 3:4 (pointing down-left) and axial load of 75 N (left).<br>Find the resultant force in magnitude and direction, and locate its line of action from A.", "intuition": "Break inclined forces into horizontal and vertical components. Pure couples are added directly into the moment equation without multiplying by any distance!", "steps": [{"title": "Step 1: Resolve Forces", "content": "For 100 N at slope 3:4: $\\cos\\theta = 4/5 = 0.8$, $\\sin\\theta = 3/5 = 0.6$.<br>$$\\sum F_x = -75 - (100 \\times 0.8) = -155\\text{ N} \\quad (\\leftarrow)$$$$\\sum F_y = -200 + 50 - (100 \\times 0.6) = -210\\text{ N} \\quad (\\downarrow)$$"}, {"title": "Step 2: Resultant Magnitude and Angle", "content": "$$R = \\sqrt{(-155)^2 + (-210)^2} = \\sqrt{24025 + 44100} = \\mathbf{261.01\\text{ N}}$$$$\\theta = \\tan^{-1}\\left(\\frac{210}{155}\\right) \\approx \\mathbf{53.57^\\circ \\quad (\\text{3rd Quadrant: } \\swarrow)}$$"}, {"title": "Step 3: Varignon's Theorem for Location", "content": "Taking moments about A (CCW positive):<br>$$\\sum M_A = +(50 \\times 2) + 80 - (60 \\times 6) = 100 + 80 - 360 = -180\\text{ N}\\cdot\\text{m}$$$$\\text{Location: } d = \\frac{|\\sum M_A|}{|\\sum F_y|} = \\frac{180}{210} = \\mathbf{0.857\\text{ m to the right of A}}$$"}], "answer": "R = 261.01 N at 53.57\u00b0 in 3rd quadrant, line of action intersects bar at 0.857 m from A.", "trap": "Do NOT multiply the 80 N\u00b7m couple by 4 m! It is already a moment (N\u00b7m), so add it directly."}, {"id": 4, "module": 1, "moduleName": "Module 01: Coplanar Forces & Centroid", "title": "Centroid of a Shaded Trapezium", "pyq": "KT 2024 (Q.1.b) / May 2026 (Q.1.e)", "marks": "5 Marks", "mustPass": true, "problem": "Find the coordinates of the centroid (x\u0304, y\u0304) of the shaded trapezium with respect to origin O:<br>\u2022 Base along x-axis from x = 0 to 8 m.<br>\u2022 Left vertical edge along y-axis from y = 0 to 6 m.<br>\u2022 Top horizontal edge from (0, 6) to (5, 6) (length 5 m).<br>\u2022 Inclined edge connects (5, 6) to (8, 0).", "intuition": "Split any irregular polygon into basic standard shapes: a rectangle and a right triangle.", "steps": [{"title": "Step 1: Divide into Standard Shapes", "content": "1. Rectangle: width = 5 m, height = 6 m<br>$$A_1 = 5 \\times 6 = 30\\text{ m}^2, \\quad x_1 = 2.5\\text{ m}, \\quad y_1 = 3.0\\text{ m}$$2. Right Triangle: base = 8 - 5 = 3 m, height = 6 m<br>$$A_2 = \\frac{1}{2} \\times 3 \\times 6 = 9\\text{ m}^2, \\quad x_2 = 5 + \\frac{1}{3}(3) = 6.0\\text{ m}, \\quad y_2 = \\frac{1}{3}(6) = 2.0\\text{ m}$$"}, {"title": "Step 2: Calculate Total Area and Moments", "content": "$$\\sum A = 30 + 9 = 39\\text{ m}^2$$$$\\sum Ax = (30 \\times 2.5) + (9 \\times 6.0) = 75 + 54 = 129$$$$\\sum Ay = (30 \\times 3.0) + (9 \\times 2.0) = 90 + 18 = 108$$"}, {"title": "Step 3: Coordinates of Centroid", "content": "$$\\mathbf{\\bar{x} = \\frac{\\sum Ax}{\\sum A} = \\frac{129}{39} \\approx 3.31\\text{ m}}$$$$\\mathbf{\\bar{y} = \\frac{\\sum Ay}{\\sum A} = \\frac{108}{39} \\approx 2.77\\text{ m}}$$"}], "answer": "Centroid coordinates: (x\u0304 = 3.31 m, y\u0304 = 2.77 m)", "trap": "Remember that for a triangle, centroid from the 90\u00b0 corner is at b/3, but from the sharp apex it is at 2b/3. Here we added 5 + (1/3)*3 = 6.0 m."}, {"id": 5, "module": 1, "moduleName": "Module 01: Coplanar Forces & Centroid", "title": "Centroid of Composite Section with Semicircle and Circular Hole", "pyq": "May 2026 (Q.4.a) / Nov 2025 (Q.2.B)", "marks": "10 Marks", "mustPass": true, "problem": "A composite plate consists of:<br>1. Triangle on left (base 3 m, height 2 m)<br>2. Rectangle in middle (width 3 m, height 2 m)<br>3. Semicircle on right (radius R = 1 m, base on line x = 6)<br>4. Circular cutout of diameter 1.5 m (radius r = 0.75 m) centered at (6, 1).<br>Determine the centroid of the remaining area.", "intuition": "Treat cutouts as negative areas! Use the formula for centroid of a semicircle: distance from diametral base is 4R / (3\u03c0).", "steps": [{"title": "Step 1: Construct Area & Centroid Table", "content": "\u2022 Triangle: $A_1 = 3.0, \\; x_1 = 2.0, \\; y_1 = 0.67 \\implies A_1 x_1 = 6.0, \\; A_1 y_1 = 2.0$<br>\u2022 Rectangle: $A_2 = 6.0, \\; x_2 = 4.5, \\; y_2 = 1.0 \\implies A_2 x_2 = 27.0, \\; A_2 y_2 = 6.0$<br>\u2022 Semicircle: $A_3 = \\frac{\\pi(1)^2}{2} = 1.57, \\; x_3 = 6 + \\frac{4(1)}{3\\pi} = 6.424, \\; y_3 = 1.0 \\implies A_3 x_3 = 10.09, \\; A_3 y_3 = 1.57$<br>\u2022 Circular Hole (Negative): $A_4 = -\\pi(0.75)^2 = -1.77, \\; x_4 = 6.0, \\; y_4 = 1.0 \\implies A_4 x_4 = -10.62, \\; A_4 y_4 = -1.77$"}, {"title": "Step 2: Sum Up and Calculate Centroid", "content": "$$\\sum A = 3.0 + 6.0 + 1.57 - 1.77 = 8.80\\text{ m}^2$$$$\\sum Ax = 6.0 + 27.0 + 10.09 - 10.62 = 32.47$$$$\\sum Ay = 2.0 + 6.0 + 1.57 - 1.77 = 7.80$$$$\\mathbf{\\bar{x} = \\frac{32.47}{8.80} \\approx 3.69\\text{ m}}, \\quad \\mathbf{\\bar{y} = \\frac{7.80}{8.80} \\approx 0.89\\text{ m}}$$"}], "answer": "Centroid of remaining area: (x\u0304 = 3.69 m, y\u0304 = 0.89 m)", "trap": "Always subtract the hole area: $A_{hole}$ must carry a negative sign in both area sum and moment sums."}, {"id": 6, "module": 2, "moduleName": "Module 02: Equilibrium & Beams", "title": "Lami's Theorem Statement, Proof & Suspended Cord Tension", "pyq": "Nov 2025 (Q.1.B, Q.2.C)", "marks": "5 Marks", "mustPass": true, "problem": "1. State and prove Lami's Theorem.<br>2. A block of mass 20 kg is suspended by two cords AB and BC. Cord AB makes an angle of 30\u00b0 with the horizontal and cord BC makes an angle of 45\u00b0 with the horizontal. Determine the tensions in cords AB and BC.", "intuition": "Lami's theorem relates 3 concurrent forces in equilibrium to the sines of the angles opposite to them: F1/sin(\u03b1) = F2/sin(\u03b2) = F3/sin(\u03b3).", "steps": [{"title": "Step 1: Statement & Proof of Lami's Theorem", "content": "\u2022 <b>Statement:</b> If three coplanar concurrent forces keep a body in equilibrium, each force is proportional to the sine of the angle between the other two forces.<br>\u2022 <b>Proof:</b> By Triangle Law of forces, three forces in equilibrium form a closed triangle with interior angles $(180^\\circ - \\alpha), (180^\\circ - \\beta), (180^\\circ - \\gamma)$. Applying the Sine Rule:<br>$$\\frac{P}{\\sin(180^\\circ - \\alpha)} = \\frac{Q}{\\sin(180^\\circ - \\beta)} = \\frac{R}{\\sin(180^\\circ - \\gamma)} \\implies \\mathbf{\\frac{P}{\\sin \\alpha} = \\frac{Q}{\\sin \\beta} = \\frac{R}{\\sin \\gamma}}$$"}, {"title": "Step 2: Solve Cord Tension Problem", "content": "Weight $W = 20 \\times 9.81 = 196.2\\text{ N} \\downarrow$.<br>Angles between forces at joint B:<br>\u2022 Between cords AB & BC: $180^\\circ - (30^\\circ + 45^\\circ) = 105^\\circ$<br>\u2022 Opposite to $T_{AB}$: $90^\\circ + 45^\\circ = 135^\\circ$<br>\u2022 Opposite to $T_{BC}$: $90^\\circ + 30^\\circ = 120^\\circ$<br>Applying Lami's Theorem:<br>$$\\frac{T_{AB}}{\\sin 135^\\circ} = \\frac{T_{BC}}{\\sin 120^\\circ} = \\frac{196.2}{\\sin 105^\\circ}$$$$\\mathbf{T_{AB} = 196.2 \\times \\frac{\\sin 135^\\circ}{\\sin 105^\\circ} \\approx 143.63\\text{ N}}$$$$\\mathbf{T_{BC} = 196.2 \\times \\frac{\\sin 120^\\circ}{\\sin 105^\\circ} \\approx 175.92\\text{ N}}$$"}], "answer": "T_AB = 143.63 N,  T_BC = 175.92 N", "trap": "Always compute angles between the forces directly from the diagram before applying Lami's theorem."}, {"id": 7, "module": 2, "moduleName": "Module 02: Equilibrium & Beams", "title": "Equilibrium of Two Spheres in a Horizontal Channel", "pyq": "Nov 2025 (Q.2.D) / May 2026", "marks": "5 Marks", "mustPass": true, "problem": "Two smooth spheres A and B are placed in a horizontal channel of width 120 mm:<br>\u2022 Sphere A: radius r_A = 40 mm, weight W_A = 500 N (rests against left wall and floor)<br>\u2022 Sphere B: radius r_B = 30 mm, weight W_B = 200 N (rests on Sphere A and against right wall)<br>Determine all contact reactions.", "intuition": "Draw FBD of the upper sphere (Sphere B) first because it has fewer unknowns (only 2 forces to balance weight). Then pass the contact reaction to Sphere A.", "steps": [{"title": "Step 1: Geometry of Sphere Centers", "content": "Center distance $d = r_A + r_B = 40 + 30 = 70\\text{ mm}$.<br>Horizontal distance between centers: $\\Delta x = 120 - 40 - 30 = 50\\text{ mm}$.<br>$$\\cos \\theta = \\frac{50}{70} = \\frac{5}{7} \\approx 0.7143 \\implies \\theta = 44.42^\\circ, \\quad \\sin \\theta = 0.6999$$"}, {"title": "Step 2: FBD & Equilibrium of Upper Sphere B", "content": "$$\\sum F_y = 0 \\implies R_{AB} \\sin 44.42^\\circ - 200 = 0 \\implies \\mathbf{R_{AB} = \\frac{200}{0.6999} = 285.77\\text{ N}}$$$$\\sum F_x = 0 \\implies R_{\\text{wall}, B} = R_{AB} \\cos 44.42^\\circ = 285.77 \\times \\frac{5}{7} = \\mathbf{204.12\\text{ N}}$$"}, {"title": "Step 3: FBD & Equilibrium of Lower Sphere A", "content": "$$\\sum F_x = 0 \\implies R_{\\text{wall}, A} = R_{AB} \\cos 44.42^\\circ = \\mathbf{204.12\\text{ N}}$$$$\\sum F_y = 0 \\implies R_{\\text{floor}, A} = W_A + R_{AB} \\sin 44.42^\\circ = 500 + 200 = \\mathbf{700.00\\text{ N}}$$"}], "answer": "R_wall,B = 204.12 N,  R_AB = 285.77 N,  R_wall,A = 204.12 N,  R_floor,A = 700.00 N", "trap": "Always solve the top sphere first! Starting with the bottom sphere introduces 3 unknowns (R_floor, R_wall, R_AB) in 2 equations."}, {"id": 8, "module": 2, "moduleName": "Module 02: Equilibrium & Beams", "title": "Support Reactions of Beam with Point Load, UDL, UVL & Couples", "pyq": "KT 2024 (Q.3.a)", "marks": "10 Marks", "mustPass": true, "problem": "A simply supported beam AB of span 9 m (pinned at A, roller at B) is loaded as follows:<br>\u2022 Point load 5 kN (down) and CW couple 12 kN\u00b7m at x = 2 m.<br>\u2022 UDL of 3 kN/m from x = 2 m to x = 6 m (span 4 m).<br>\u2022 CW couple of 3 kN\u00b7m at x = 6 m.<br>\u2022 UVL from x = 6 m to x = 9 m (span 3 m), increasing from 0 to 6 kN/m at B.<br>Find the reactions at supports A and B.", "intuition": "Convert distributed loads to equivalent point loads acting at their centroids: UDL acts at its midpoint; UVL acts at 2/3 of the span from the zero-load point.", "steps": [{"title": "Step 1: Equivalent Point Loads and Locations", "content": "\u2022 Point load: $5\\text{ kN}$ at $x = 2\\text{ m}$<br>\u2022 UDL: $W_1 = 3 \\times 4 = 12\\text{ kN}$ at $x = 2 + 2 = 4\\text{ m}$<br>\u2022 UVL: $W_2 = \\frac{1}{2} \\times 3 \\times 6 = 9\\text{ kN}$ at $x = 6 + \\frac{2}{3}(3) = 8\\text{ m}$<br>\u2022 Applied Couples: $+12\\text{ kN}\\cdot\\text{m}$ (CW) and $+3\\text{ kN}\\cdot\\text{m}$ (CW)"}, {"title": "Step 2: Moment Equilibrium About Point A (\\sum M_A = 0)", "content": "Taking Clockwise as positive:<br>$$(5 \\times 2) + 12 + (12 \\times 4) + 3 + (9 \\times 8) - (R_B \\times 9) = 0$$$$10 + 12 + 48 + 3 + 72 - 9 R_B = 0 \\implies 145 = 9 R_B$$$$\\mathbf{R_B = \\frac{145}{9} \\approx 16.11\\text{ kN} \\quad (\\uparrow)}$$"}, {"title": "Step 3: Vertical and Horizontal Equilibrium", "content": "$$\\sum F_y = 0 \\implies R_A + R_B = 5 + 12 + 9 = 26\\text{ kN}$$$$\\mathbf{R_A = 26 - 16.11 = 9.89\\text{ kN} \\quad (\\uparrow)}$$$$\\sum F_x = 0 \\implies \\mathbf{H_A = 0}$$"}], "answer": "R_A = 9.89 kN (up),  R_B = 16.11 kN (up),  H_A = 0", "trap": "For the triangle (UVL), the centroid is at (2/3)*base from the zero vertex, so from A it is 6 + 2 = 8 m."}, {"id": 9, "module": 2, "moduleName": "Module 02: Equilibrium & Beams", "title": "Equilibrium of Suspended Chords with Two Hanging Masses", "pyq": "KT 2024 (Q.2.a) / May 2026", "marks": "5 Marks", "mustPass": false, "problem": "Block P (5 kg) and Block Q (m kg) are suspended from continuous cords:<br>\u2022 Joint B connects chord AB (slope 4:3 with wall), hanging block P (5 kg), and chord BC (30\u00b0 to horizontal).<br>\u2022 Joint C connects chord BC (30\u00b0 to horizontal), hanging block Q (m kg), and chord CD (70\u00b0 to horizontal).<br>Determine the mass m of block Q in kg.", "intuition": "Solve joint B first to find tension T_BC in the shared connecting chord. Then use that tension to solve joint C for mass m.", "steps": [{"title": "Step 1: Equilibrium of Joint B", "content": "$$W_P = 5 \\times 9.81 = 49.05\\text{ N}$$$$\\sum F_x = 0 \\implies T_{BC} \\cos 30^\\circ - T_{AB}(0.6) = 0 \\implies T_{AB} = 1.4433 T_{BC}$$$$\\sum F_y = 0 \\implies T_{AB}(0.8) + T_{BC} \\sin 30^\\circ - 49.05 = 0$$$$(1.4433 T_{BC})(0.8) + 0.5 T_{BC} = 49.05 \\implies 1.6546 T_{BC} = 49.05 \\implies \\mathbf{T_{BC} = 29.64\\text{ N}}$$"}, {"title": "Step 2: Equilibrium of Joint C", "content": "$$\\sum F_x = 0 \\implies T_{CD} \\cos 70^\\circ = T_{BC} \\cos 30^\\circ = 29.64(0.8660) = 25.67 \\implies \\mathbf{T_{CD} = 75.06\\text{ N}}$$$$\\sum F_y = 0 \\implies W_Q = T_{CD} \\sin 70^\\circ - T_{BC} \\sin 30^\\circ$$$$W_Q = 75.06(0.9397) - 29.64(0.5) = 70.53 - 14.82 = 55.71\\text{ N}$$$$\\mathbf{m = \\frac{W_Q}{g} = \\frac{55.71}{9.81} \\approx 5.68\\text{ kg}}$$"}], "answer": "Mass of block Q = 5.68 kg", "trap": "Notice chord BC pulls UP at joint B, but pulls DOWN and left at joint C."}, {"id": 10, "module": 3, "moduleName": "Module 03: Friction & Wedges", "title": "Angle of Friction & Angle of Repose (Proof that \u03c6 = \u03b8)", "pyq": "KT 2024 (Q.1.d) / May 2026 (Q.1.c) / Nov 2025 (Q.2.E)", "marks": "5 Marks", "mustPass": true, "problem": "Define Angle of Friction and Angle of Repose. Prove with a neat diagram that the Angle of Friction is equal to the Angle of Repose (\u03c6 = \u03b8).", "intuition": "This exact theory derivation appears in almost every single D.Y. Patil EM paper! Memorize this 4-step proof.", "steps": [{"title": "Step 1: Definitions", "content": "\u2022 <b>Angle of Friction (\u03c6):</b> The angle made by the resultant contact reaction R with the normal reaction N when the body is in limiting equilibrium: $\\tan \\phi = \\mu$.<br>\u2022 <b>Angle of Repose (\u03b8):</b> The maximum inclination angle of a rough plane with the horizontal at which a body placed on it remains in equilibrium under gravity alone without sliding down."}, {"title": "Step 2: Derivation (\u03c6 = \u03b8)", "content": "Consider a block of weight W on an inclined plane of angle \u03b8 on the verge of sliding down:<br>1. Normal to plane: $N = W \\cos \\theta$<br>2. Parallel to plane: $F_s = W \\sin \\theta$<br>Dividing the two equations:<br>$$\\frac{F_s}{N} = \\frac{W \\sin \\theta}{W \\cos \\theta} = \\tan \\theta$$Since $F_s / N = \\mu$, we have $\\mu = \\tan \\theta$.<br>But by definition of angle of friction, $\\mu = \\tan \\phi$.<br>$$\\tan \\phi = \\tan \\theta \\implies \\mathbf{\\phi = \\theta} \\quad \\text{(Hence Proved!)}$$"}], "answer": "Proved that Angle of Friction (\u03c6) = Angle of Repose (\u03b8).", "trap": "Draw a small sketch of an inclined block with N perpendicular to the incline, W straight down, and F_s pointing up the plane."}, {"id": 11, "module": 3, "moduleName": "Module 03: Friction & Wedges", "title": "Two Stacked Blocks with Anchored Cord Friction", "pyq": "KT 2024 (Q.2.c) / May 2026 (Q.2.c)", "marks": "5 Marks", "mustPass": true, "problem": "Block A (20 kg) rests on Block B (30 kg). Block A is anchored to a vertical wall by a cord inclined at 30\u00b0 to horizontal. Block B rests on a horizontal floor. Take \u03bc_AB = 0.3 and \u03bc_floor = 0.25. Find the horizontal pull force P required to move block B to the right.", "intuition": "Friction always opposes the RELATIVE motion between surfaces. As block B slides right, friction on A is rightward, while friction on B from both A and floor is leftward.", "steps": [{"title": "Step 1: Equilibrium of Top Block A", "content": "$$W_A = 20 \\times 9.81 = 196.2\\text{ N}$$$$\\sum F_y = 0 \\implies N_1 + T \\sin 30^\\circ - 196.2 = 0 \\implies N_1 = 196.2 - 0.5 T$$$$\\sum F_x = 0 \\implies 0.3 N_1 = T \\cos 30^\\circ = 0.8660 T$$$$0.3(196.2 - 0.5 T) = 0.8660 T \\implies 58.86 = 1.0160 T \\implies \\mathbf{T = 57.93\\text{ N}}$$$$N_1 = 196.2 - 0.5(57.93) = 167.24\\text{ N}, \\quad F_1 = 0.3(167.24) = \\mathbf{50.17\\text{ N}}$$"}, {"title": "Step 2: Equilibrium of Bottom Block B", "content": "$$W_B = 30 \\times 9.81 = 294.3\\text{ N}$$$$N_2 = N_1 + W_B = 167.24 + 294.3 = 461.54\\text{ N}$$$$F_2 = \\mu_{\\text{floor}} N_2 = 0.25 \\times 461.54 = \\mathbf{115.39\\text{ N}}$$$$\\sum F_x = 0 \\implies P = F_1 + F_2 = 50.17 + 115.39 = \\mathbf{165.56\\text{ N}}$$"}], "answer": "P = 165.56 N", "trap": "Normal force on floor N2 is NOT just (W_A + W_B)! Because the cord pulls upward with T sin 30\u00b0, N1 is less than W_A."}, {"id": 12, "module": 3, "moduleName": "Module 03: Friction & Wedges", "title": "Wedge Friction to Raise a Heavy Stone Block", "pyq": "Nov 2025 (Q.4.C)", "marks": "10 Marks", "mustPass": true, "problem": "Find the horizontal force P necessary to raise a stone block of weight 2000 N resting against a vertical wall using a 15\u00b0 wedge. Take \u03bc = 0.25 for all contact surfaces. Neglect the weight of the wedge.", "intuition": "Standard 10-mark wedge question! Draw separate FBDs for the block and the wedge. Tilt contact reaction R by the friction angle \u03c6 = tan\u207b\u00b9(\u03bc).", "steps": [{"title": "Step 1: Calculate Friction Angle", "content": "$$\\phi = \\tan^{-1}(0.25) \\approx 14.04^\\circ$$"}, {"title": "Step 2: FBD of the Block (Moving Upwards)", "content": "\u2022 Wall reaction R1 tilts down by $\\phi = 14.04^\\circ$<br>\u2022 Wedge reaction R2 makes angle $(15^\\circ + 14.04^\\circ = 29.04^\\circ)$ with vertical<br>$$\\sum F_x = 0 \\implies R_1 \\cos \\phi = R_2 \\sin(29.04^\\circ) \\implies R_1 = R_2 \\frac{\\sin 29.04^\\circ}{\\cos 14.04^\\circ}$$$$\\sum F_y = 0 \\implies R_2 \\cos 29.04^\\circ - R_1 \\sin 14.04^\\circ = 2000$$$$R_2 [0.8743 - 0.4854 \\times 0.25] = 2000 \\implies 0.7530 R_2 = 2000 \\implies \\mathbf{R_2 \\approx 2656.0\\text{ N}}$$"}, {"title": "Step 3: FBD of the Wedge (Moving Inwards)", "content": "$$R_3 = \\frac{R_2 \\cos 29.04^\\circ}{\\cos 14.04^\\circ} \\approx 2394.8\\text{ N}$$$$P = R_2 \\sin 29.04^\\circ + R_3 \\sin 14.04^\\circ = 2656(0.4854) + 2394.8(0.2425) = \\mathbf{1869.9\\text{ N} \\approx 1.87\\text{ kN}}$$"}], "answer": "Push force P = 1.87 kN (1869.9 N)", "trap": "Because the block is moving UP, wall friction points DOWN. This adds to the required force."}, {"id": 13, "module": 3, "moduleName": "Module 03: Friction & Wedges", "title": "Block Slipping vs. Tipping (Toppling) Analysis", "pyq": "Nov 2025 (Q.3.D)", "marks": "5 Marks", "mustPass": false, "problem": "A block of height 10 cm, width 9 cm, and weight 60 N rests on a horizontal floor (\u03bc = 0.5). A horizontal force P is applied at the top corner C (10 cm above floor). Find the minimum value of P to disturb equilibrium and state whether it slips or tips first.", "intuition": "Calculate the force needed for slipping (P_slip = \u03bcW) and for tipping (take moment about corner B). Whichever force is SMALLER will occur first!", "steps": [{"title": "Step 1: Force Required for Slipping", "content": "$$P_{\\text{slip}} = \\mu N = \\mu W = 0.5 \\times 60 = \\mathbf{30\\text{ N}}$$"}, {"title": "Step 2: Force Required for Tipping About Toe B", "content": "Take moments about the pivot point B (bottom-right edge):<br>$$(P_{\\text{tip}} \\times h) - \\left(W \\times \\frac{b}{2}\\right) = 0$$$$(P_{\\text{tip}} \\times 10) - (60 \\times 4.5) = 0 \\implies 10 P_{\\text{tip}} = 270$$$$\\mathbf{P_{\\text{tip}} = 27\\text{ N}}$$"}, {"title": "Step 3: Compare and Conclude", "content": "Since $P_{\\text{tip}} (27\\text{ N}) < P_{\\text{slip}} (30\\text{ N})$, the block will **TIP (topple) first** at $P = 27\\text{ N}$."}], "answer": "Minimum force P = 27 N, and the block will TIP first.", "trap": "Always compare both slipping and tipping! Assuming one without checking the other loses 50% marks."}, {"id": 14, "module": 4, "moduleName": "Module 04: Kinematics of Particle", "title": "Variable Acceleration: Distance from Velocity Function", "pyq": "KT 2024 (Q.1.e) / Nov 2025", "marks": "5 Marks", "mustPass": true, "problem": "The velocity of a particle moving along a straight line is given by v = 2t\u00b3 + 5t\u00b2 (where v is in m/s and t in seconds). What distance does it travel while its velocity increases from 7 m/s to 99 m/s?", "intuition": "When acceleration is NOT constant, you CANNOT use v = u + at! You must integrate: s = \u222b v dt.", "steps": [{"title": "Step 1: Find the Time Limits t1 and t2", "content": "\u2022 At $v = 7$: $2t^3 + 5t^2 = 7 \\implies 2(1)^3 + 5(1)^2 = 7 \\implies \\mathbf{t_1 = 1\\text{ s}}$<br>\u2022 At $v = 99$: $2t^3 + 5t^2 = 99 \\implies 2(3)^3 + 5(3)^2 = 54 + 45 = 99 \\implies \\mathbf{t_2 = 3\\text{ s}}$"}, {"title": "Step 2: Integrate Velocity to Find Distance", "content": "$$s = \\int_1^3 (2t^3 + 5t^2) \\, dt = \\left[ \\frac{2t^4}{4} + \\frac{5t^3}{3} \\right]_1^3 = \\left[ \\frac{t^4}{2} + \\frac{5t^3}{3} \\right]_1^3$$\u2022 At $t = 3$: $\\frac{81}{2} + 5(9) = 40.5 + 45 = 85.5\\text{ m}$<br>\u2022 At $t = 1$: $\\frac{1}{2} + \\frac{5}{3} \\approx 2.167\\text{ m}$<br>$$\\mathbf{s = 85.5 - 2.167 = 83.33\\text{ m}}$$"}], "answer": "Distance traveled = 83.33 m", "trap": "Always substitute the limits into [F(t2) - F(t1)] carefully. Common mistake is forgetting to subtract the lower limit at t = 1."}, {"id": 15, "module": 4, "moduleName": "Module 04: Kinematics of Particle", "title": "Traffic Light Uniform Deceleration Problem", "pyq": "May 2026 (Q.3.d) / Nov 2025 (Q.1.C)", "marks": "5 Marks", "mustPass": true, "problem": "A motorist travelling at 90 kmph observes a traffic light 250 m ahead turns red for 12 seconds. He wishes to pass the light without stopping, just as it turns green. Determine: (i) required uniform deceleration, (ii) speed as he passes the light.", "intuition": "Convert kmph to m/s first (multiply by 5/18)! Then use standard kinematic formulas: s = ut + 0.5at\u00b2.", "steps": [{"title": "Step 1: Convert Initial Velocity to m/s", "content": "$$u = 90 \\times \\frac{5}{18} = 25\\text{ m/s}, \\quad s = 250\\text{ m}, \\quad t = 12\\text{ s}$$"}, {"title": "Step 2: Find Uniform Deceleration", "content": "$$s = ut + \\frac{1}{2}at^2 \\implies 250 = 25(12) + \\frac{1}{2}a(12)^2$$$$250 = 300 + 72a \\implies 72a = -50$$$$\\mathbf{a = -0.694\\text{ m/s}^2 \\implies \\text{Deceleration is } 0.694\\text{ m/s}^2}$$"}, {"title": "Step 3: Find Speed as He Passes the Light", "content": "$$v = u + at = 25 - (0.694 \\times 12) = 25 - 8.33 = \\mathbf{16.67\\text{ m/s}}$$In kmph: $16.67 \\times \\frac{18}{5} = \\mathbf{60\\text{ kmph}}$"}], "answer": "Deceleration = 0.694 m/s\u00b2, Passing speed = 16.67 m/s (60 kmph)", "trap": "Always convert km/h to m/s immediately (multiply by 5/18) before using equations of motion."}, {"id": 16, "module": 4, "moduleName": "Module 04: Kinematics of Particle", "title": "Motion Curves: Construct v-t and s-t from a-t Diagram", "pyq": "KT 2024 (Q.3.c) / May 2026 (Q.5.a)", "marks": "10 Marks", "mustPass": true, "problem": "A particle starts from rest (v = 0, s = 0 at t = 0). Its acceleration-time curve is triangular:<br>\u2022 t = 0 to 5 s: a increases uniformly from 0 to +8 m/s\u00b2<br>\u2022 t = 5 to 10 s: a decreases uniformly from +8 to 0 m/s\u00b2<br>\u2022 t = 10 to 15 s: a decreases uniformly from 0 to -8 m/s\u00b2<br>\u2022 t = 15 to 20 s: a increases uniformly from -8 to 0 m/s\u00b2.<br>Construct the velocity and displacement values at t = 5, 10, 15, and 20 s.", "intuition": "Area under a-t curve = Change in velocity. Area under v-t curve = Change in displacement.", "steps": [{"title": "Step 1: Calculate Velocity at Key Points", "content": "\u2022 $t = 5\\text{ s}$: $\\Delta v = \\frac{1}{2}(5)(8) = +20\\text{ m/s} \\implies \\mathbf{v(5) = 20\\text{ m/s}}$<br>\u2022 $t = 10\\text{ s}$: $\\Delta v = \\frac{1}{2}(5)(8) = +20\\text{ m/s} \\implies \\mathbf{v(10) = 40\\text{ m/s} \\quad (\\text{Peak speed!})}$<br>\u2022 $t = 15\\text{ s}$: $\\Delta v = -\\frac{1}{2}(5)(8) = -20\\text{ m/s} \\implies \\mathbf{v(15) = 20\\text{ m/s}}$<br>\u2022 $t = 20\\text{ s}$: $\\Delta v = -\\frac{1}{2}(5)(8) = -20\\text{ m/s} \\implies \\mathbf{v(20) = 0\\text{ m/s} \\quad (\\text{At rest})}$"}, {"title": "Step 2: Describe Curve Shapes and Total Distance", "content": "\u2022 Since $a-t$ is linear (degree 1), $v-t$ is parabolic (degree 2) and $s-t$ is cubic (degree 3).<br>\u2022 Total displacement over symmetric curve:<br>$$\\mathbf{s_{\\text{total}} = 400\\text{ m}}$$"}], "answer": "v(5) = 20 m/s, v(10) = 40 m/s, v(15) = 20 m/s, v(20) = 0 m/s, s_total = 400 m", "trap": "Remember that a negative area under the acceleration curve means REDUCING velocity, not negative displacement."}, {"id": 17, "module": 4, "moduleName": "Module 04: Kinematics of Particle", "title": "Projectile Trajectory Derivation (Path is a Parabola)", "pyq": "Nov 2025 (Q.3.F)", "marks": "5 Marks", "mustPass": true, "problem": "Derive the equation of the path of a projectile and hence show that the path traced by a projectile is a parabolic curve.", "intuition": "Separate horizontal motion (constant speed, a_x = 0) and vertical motion (constant gravity, a_y = -g). Eliminate time t to get y as a function of x.", "steps": [{"title": "Step 1: Equations of Motion", "content": "1. Horizontal: $x = (u \\cos \\theta) t \\implies \\mathbf{t = \\frac{x}{u \\cos \\theta}}$<br>2. Vertical: $y = (u \\sin \\theta) t - \\frac{1}{2} g t^2$"}, {"title": "Step 2: Substitute t into Vertical Equation", "content": "$$y = (u \\sin \\theta) \\left( \\frac{x}{u \\cos \\theta} \\right) - \\frac{1}{2} g \\left( \\frac{x}{u \\cos \\theta} \\right)^2$$$$\\mathbf{y = x \\tan \\theta - \\frac{g x^2}{2 u^2 \\cos^2 \\theta}}$$"}, {"title": "Step 3: Conclusion", "content": "This is of the algebraic form $y = Ax - Bx^2$ (quadratic in x with negative x\u00b2 coefficient). Therefore, the path of a projectile is a **parabola**."}], "answer": "y = x tan(\u03b8) - [g x\u00b2 / (2 u\u00b2 cos\u00b2 \u03b8)] (Parabolic trajectory proved).", "trap": "Always state explicitly that a_x = 0 and a_y = -g before writing the coordinate equations."}, {"id": 18, "module": 4, "moduleName": "Module 04: Kinematics of Particle", "title": "Projectile Problem: Ball Thrown from Top of Building", "pyq": "KT 2024 (Q.1.f)", "marks": "5 Marks", "mustPass": true, "problem": "A ball is thrown from the top of a building with speed 12 m/s at an angle of depression 30\u00b0 with the horizontal. It strikes the ground 11.3 m horizontally from the foot of the building. Determine the height of the building.", "intuition": "Angle of depression means initial vertical velocity is DOWNWARD (-u sin 30\u00b0).", "steps": [{"title": "Step 1: Velocity Components", "content": "$$u_x = 12 \\cos 30^\\circ = 10.392\\text{ m/s}$$$$u_y = -12 \\sin 30^\\circ = -6.0\\text{ m/s} \\quad (\\text{downward})$$"}, {"title": "Step 2: Time of Flight", "content": "$$x = u_x \\cdot t \\implies 11.3 = 10.392 \\cdot t \\implies \\mathbf{t = \\frac{11.3}{10.392} \\approx 1.087\\text{ s}}$$"}, {"title": "Step 3: Vertical Displacement and Building Height", "content": "$$y = u_y t - \\frac{1}{2} g t^2 = -6.0(1.087) - 0.5(9.81)(1.087)^2$$$$y = -6.522 - 5.796 = -12.32\\text{ m}$$$$\\mathbf{\\text{Height of building } h = 12.32\\text{ m}}$$"}], "answer": "Height of building = 12.32 m", "trap": "Angle of depression means u_y is negative (-6 m/s)! If you use +6 m/s, you'll calculate the wrong height."}, {"id": 19, "module": 5, "moduleName": "Module 05: Rigid Body & ICR", "title": "Concept and Properties of Instantaneous Centre of Rotation (ICR)", "pyq": "Nov 2025 (Q.1.D) / May 2026 (Q.3.e)", "marks": "4 Marks", "mustPass": true, "problem": "Define Instantaneous Centre of Rotation (ICR) and state its essential characteristics/properties.", "intuition": "At any single instant, any complex planar motion (translation + rotation) can be simplified as pure rotation about one magical point: the ICR.", "steps": [{"title": "Definition & Properties", "content": "\u2022 <b>Definition:</b> The Instantaneous Centre of Rotation (ICR) is an imaginary point fixed in space about which a rigid body undergoing general plane motion can be treated as rotating in pure rotation at that specific instant.<br>\u2022 <b>Three Essential Properties:</b><br>1. The velocity of the ICR point itself is zero ($v_I = 0$) at that instant.<br>2. The velocity of every point P on the body is directed perpendicular to the radius vector joining P to the ICR ($v_P = \\omega \\times IP$).<br>3. The ICR location changes continuously from moment to moment. The locus traced by the ICR in space is called the <i>space centrode</i>."}], "answer": "ICR definition and 3 core properties stated.", "trap": "Always remember: v = \u03c9 * r, where r is the distance from the ICR to that point!"}, {"id": 20, "module": 5, "moduleName": "Module 05: Rigid Body & ICR", "title": "ICR Velocity Analysis of a Slider-Crank Mechanism", "pyq": "KT 2024 (Q.2.e) / Nov 2025 (Q.5.B)", "marks": "10 Marks", "mustPass": true, "problem": "A slider-crank mechanism has crank OA = 200 mm (0.2 m) rotating CCW at 100 rad/s. At this instant, crank OA is at 40\u00b0 to the horizontal, and connecting rod AB is at 20\u00b0 to the horizontal. Slider B moves horizontally. Find: (i) angular velocity of rod AB, (ii) velocity of slider B.", "intuition": "Draw perpendiculars to velocity vectors at A and B. Their intersection is the ICR. Then use the Sine rule on triangle IAB.", "steps": [{"title": "Step 1: Velocity of Pin A", "content": "$$v_A = \\omega_{OA} \\times r_{OA} = 100 \\times 0.2 = \\mathbf{20.0\\text{ m/s}}$$"}, {"title": "Step 2: Locate ICR (Point I)", "content": "\u2022 Perpendicular to $v_A$ lies along line OA extended.<br>\u2022 Perpendicular to $v_B$ is a vertical line through B.<br>\u2022 Intersection is ICR $I$. In $\\triangle IAB$: $\\angle IAB = 60^\\circ$, $\\angle IBA = 70^\\circ$, $\\angle AIB = 50^\\circ$."}, {"title": "Step 3: Distance from ICR to A and B", "content": "Using Sine Rule with rod length $L_{AB} = 0.5\\text{ m}$:<br>$$IA = 0.5 \\frac{\\sin 70^\\circ}{\\sin 50^\\circ} = \\mathbf{0.613\\text{ m}}, \\quad IB = 0.5 \\frac{\\sin 60^\\circ}{\\sin 50^\\circ} = \\mathbf{0.565\\text{ m}}$$"}, {"title": "Step 4: Calculate Velocities", "content": "$$\\mathbf{\\omega_{AB} = \\frac{v_A}{IA} = \\frac{20.0}{0.613} \\approx 32.6\\text{ rad/s}}$$$$\\mathbf{v_B = \\omega_{AB} \\times IB = 32.6 \\times 0.565 \\approx 18.4\\text{ m/s}}$$"}], "answer": "\u03c9_AB = 32.6 rad/s (Clockwise),  v_B = 18.4 m/s (horizontal)", "trap": "Always verify angles inside triangle IAB sum to 180\u00b0 before applying the Sine rule."}, {"id": 21, "module": 5, "moduleName": "Module 05: Rigid Body & ICR", "title": "Two-Link Mechanism Velocity Analysis Using ICR", "pyq": "May 2026 (Q.5.b)", "marks": "10 Marks", "mustPass": false, "problem": "Rod AB of length 0.3 m rotates CCW at 2 rad/s pinned at A (40\u00b0 to vertical). Rod BC of length 0.5 m is pinned at B while end C moves along a horizontal surface (40\u00b0 to horizontal). Find: (i) angular velocity of rod BC, (ii) velocity of slider C.", "intuition": "Same ICR recipe: v_B = \u03c9_AB * L_AB. Locate ICR of link BC, then \u03c9_BC = v_B / IB and v_C = \u03c9_BC * IC.", "steps": [{"title": "Step 1: Velocity of Pin B", "content": "$$v_B = \\omega_{AB} \\times L_{AB} = 2 \\times 0.3 = \\mathbf{0.6\\text{ m/s}}$$"}, {"title": "Step 2: Locate ICR of Link BC", "content": "By triangle geometry of link BC: $IB = 0.5\\text{ m}$ and $IC = 0.383\\text{ m}$."}, {"title": "Step 3: Velocities of BC and Slider C", "content": "$$\\mathbf{\\omega_{BC} = \\frac{v_B}{IB} = \\frac{0.6}{0.5} = 1.2\\text{ rad/s}}$$$$\\mathbf{v_C = \\omega_{BC} \\times IC = 1.2 \\times 0.383 = 0.46\\text{ m/s}}$$"}], "answer": "\u03c9_BC = 1.2 rad/s,  v_C = 0.46 m/s", "trap": "Remember that v_B is common to both link AB and link BC."}, {"id": 22, "module": 6, "moduleName": "Module 06: Kinetics & D'Alembert's", "title": "D'Alembert's Principle & Equations of Dynamic Equilibrium", "pyq": "May 2026 (Q.3.f) / Nov 2025 (Q.1.E)", "marks": "5 Marks", "mustPass": true, "problem": "State D'Alembert's Principle, write the equations of dynamic equilibrium, and explain with two practical examples.", "intuition": "D'Alembert turns an acceleration problem into a statics problem by adding an imaginary 'inertia force' (-ma).", "steps": [{"title": "Statement, Equations & Examples", "content": "\u2022 <b>Statement:</b> Any system of accelerating bodies can be brought into a state of dynamic equilibrium by adding an imaginary inertia force equal in magnitude to mass times acceleration acting opposite to the acceleration vector.<br>$$\\sum \\vec{F} + (-m\\vec{a}) = 0$$\u2022 <b>Equations of Dynamic Equilibrium:</b><br>$$\\sum F_x - m a_x = 0, \\quad \\sum F_y - m a_y = 0$$\u2022 <b>Example 1 (Upward Accelerating Lift):</b> Real forces: Tension T (up), Weight mg (down). Inertia force: ma (down). Equation: $T - mg - ma = 0 \\implies T = m(g + a)$.<br>\u2022 <b>Example 2 (Horizontal Sliding Block):</b> Pull force P (right), friction F_s (left), inertia force ma (left). Equation: $P - F_s - ma = 0 \\implies P - F_s = ma$."}], "answer": "D'Alembert's principle and dynamic equilibrium explained with equations and examples.", "trap": "Always remember the minus sign: inertia force is OPPOSITE to the direction of acceleration."}, {"id": 23, "module": 6, "moduleName": "Module 06: Kinetics & D'Alembert's", "title": "Two Blocks on an Inclined Plane Collision Time", "pyq": "May 2026 (Q.2.f)", "marks": "5 Marks", "mustPass": true, "problem": "Two blocks A (10 kg, \u03bc = 0.25) and B (28 kg, \u03bc = 0.10) are released from rest on a 30\u00b0 incline separated by 12 m (block B is uphill of A). Find the time t when the blocks will collide.", "intuition": "Find the acceleration of each block down the incline. The relative acceleration is (a_B - a_A). Then s_rel = 0.5 * a_rel * t\u00b2.", "steps": [{"title": "Step 1: Acceleration of Block A", "content": "$$a_A = g(\\sin 30^\\circ - \\mu_A \\cos 30^\\circ) = 9.81[0.5 - 0.25(0.8660)] = \\mathbf{2.781\\text{ m/s}^2}$$"}, {"title": "Step 2: Acceleration of Block B", "content": "$$a_B = g(\\sin 30^\\circ - \\mu_B \\cos 30^\\circ) = 9.81[0.5 - 0.10(0.8660)] = \\mathbf{4.055\\text{ m/s}^2}$$"}, {"title": "Step 3: Relative Acceleration and Collision Time", "content": "$$a_{\\text{rel}} = a_B - a_A = 4.055 - 2.781 = \\mathbf{1.274\\text{ m/s}^2}$$$$s_{\\text{rel}} = \\frac{1}{2} a_{\\text{rel}} t^2 \\implies 12 = \\frac{1}{2}(1.274)t^2 = 0.637 t^2$$$$t = \\sqrt{\\frac{12}{0.637}} = \\sqrt{18.84} \\approx \\mathbf{4.34\\text{ s}}$$"}], "answer": "Time to collision = 4.34 seconds", "trap": "Notice mass m cancels out when sliding down an incline under gravity and friction! Acceleration only depends on g, angle, and \u03bc."}, {"id": 24, "module": 6, "moduleName": "Module 06: Kinetics & D'Alembert's", "title": "Pulley System with Three Connected Blocks", "pyq": "Nov 2025 (Q.5.C)", "marks": "10 Marks", "mustPass": true, "problem": "A pulley system consists of a fixed ceiling pulley connected by cord 1 to Block C (7 kg) and a movable pulley. Around the movable pulley passes cord 2 carrying Block A (3 kg) and Block B (2 kg). Determine the accelerations of blocks A, B, and C, and find string tensions.", "intuition": "Kinematic relation: If C goes down with a_C, the movable pulley goes up with a_C. Tension in main cord is T2 = 2*T1.", "steps": [{"title": "Step 1: Kinematic Acceleration Relations", "content": "\u2022 $a_A = a_r - a_C \\quad (\\downarrow)$<br>\u2022 $a_B = a_r + a_C \\quad (\\uparrow)$<br>\u2022 $T_2 = 2T_1$ (for ideal massless movable pulley)"}, {"title": "Step 2: Equations of Motion for Each Block", "content": "1. Block A: $3(9.81) - T_1 = 3(a_r - a_C) \\implies 29.43 - T_1 = 3a_r - 3a_C$<br>2. Block B: $T_1 - 2(9.81) = 2(a_r + a_C) \\implies T_1 - 19.62 = 2a_r + 2a_C$<br>3. Block C: $7(9.81) - 2T_1 = 7a_C \\implies 68.67 - 2T_1 = 7a_C$"}, {"title": "Step 3: Solve the Linear System", "content": "$$\\mathbf{a_C = 1.83\\text{ m/s}^2 \\quad (\\downarrow)}$$$$\\mathbf{a_A = 0.50\\text{ m/s}^2 \\quad (\\downarrow)}$$$$\\mathbf{a_B = 4.16\\text{ m/s}^2 \\quad (\\uparrow)}$$$$\\mathbf{T_1 = 27.94\\text{ N}}, \\quad \\mathbf{T_2 = 55.88\\text{ N}}$$"}], "answer": "a_C = 1.83 m/s\u00b2 (down), a_A = 0.50 m/s\u00b2 (down), a_B = 4.16 m/s\u00b2 (up), T1 = 27.94 N, T2 = 55.88 N", "trap": "Do not assume both cords have the same tension! T2 = 2 * T1 because the movable pulley is supported by two sides of cord 1."}, {"id": 25, "module": 6, "moduleName": "Module 06: Kinetics & D'Alembert's", "title": "Elevator Cable Tension with Upward Acceleration", "pyq": "Nov 2025 (Q.3.E)", "marks": "5 Marks", "mustPass": true, "problem": "A vertical lift of total mass 750 kg starts from rest and acquires an upward velocity of 3 m/s over a distance of 4 m with constant acceleration. Calculate the tension in the cable.", "intuition": "Use v\u00b2 = u\u00b2 + 2as to find acceleration a. Then apply Newton's 2nd Law: T - mg = ma => T = m(g + a).", "steps": [{"title": "Step 1: Find Acceleration Using Kinematics", "content": "$$v^2 = u^2 + 2as \\implies 3^2 = 0 + 2a(4)$$$$9 = 8a \\implies \\mathbf{a = \\frac{9}{8} = 1.125\\text{ m/s}^2}$$"}, {"title": "Step 2: Calculate Cable Tension", "content": "$$T - mg = ma \\implies T = m(g + a)$$$$T = 750(9.81 + 1.125) = 750(10.935) = \\mathbf{8201.25\\text{ N} \\approx 8.20\\text{ kN}}$$"}], "answer": "Cable tension T = 8.20 kN (8201.25 N)", "trap": "Because the elevator is accelerating UPWARDS, tension is GREATER than weight (T = m(g + a)). If moving downwards with acceleration a, T = m(g - a)."}];
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let masteredIds = new Set(JSON.parse(localStorage.getItem('em_mastered_ids') || '[]'));
+
+    function renderQuestions() {
+      const container = document.getElementById('questions-container');
+      container.innerHTML = '';
+
+      const filtered = questionsData.filter(q => {
+        // Filter by tab
+        if (currentFilter === 'mustPass' && !q.mustPass) return false;
+        if (typeof currentFilter === 'number' && q.module !== currentFilter) return false;
+
+        // Search query
+        if (searchQuery.trim()) {
+          const qStr = (q.title + ' ' + q.problem + ' ' + q.moduleName + ' ' + q.answer).toLowerCase();
+          if (!qStr.includes(searchQuery.toLowerCase())) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-8 text-center text-slate-400">
+            <p class="text-sm">No questions match your filter.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach((q, idx) => {
+        const isMastered = masteredIds.has(q.id);
+        const card = document.createElement('div');
+        card.className = `bg-slate-800/80 border ${isMastered ? 'border-emerald-500/50 bg-slate-800/90' : 'border-slate-700/80'} rounded-2xl p-5 shadow-md transition hover:border-slate-600 space-y-4`;
+        card.id = `q-${q.id}`;
+
+        let stepsHtml = q.steps.map((s, sIdx) => `
+          <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-4 space-y-1.5">
+            <h5 class="text-xs font-bold text-blue-400 uppercase tracking-wider">${s.title}</h5>
+            <div class="text-xs sm:text-sm text-slate-200 leading-relaxed">${s.content}</div>
+          </div>
+        `).join('');
+
+        card.innerHTML = `
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${q.mustPass ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-slate-700 text-slate-300'}">
+                Q${q.id}
+              </span>
+              <span class="text-xs text-slate-400">${q.moduleName}</span>
+              ${q.mustPass ? '<span class="bg-red-500/20 text-red-300 border border-red-500/30 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">⚡ Must-Pass</span>' : ''}
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs bg-slate-700/60 px-2 py-0.5 rounded text-slate-300 font-mono">${q.marks}</span>
+              <span class="text-xs bg-blue-900/40 border border-blue-500/30 text-blue-300 px-2 py-0.5 rounded">${q.pyq}</span>
+              <button onclick="toggleMastered(${q.id})" class="px-2.5 py-1 rounded-lg text-xs font-medium border flex items-center gap-1 transition ${isMastered ? 'bg-emerald-600 text-white border-emerald-500' : 'bg-slate-700/60 hover:bg-slate-700 text-slate-300 border-slate-600'}">
+                <span>${isMastered ? '✓ Mastered' : 'Mark Done'}</span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-base sm:text-lg font-bold text-white">${q.title}</h3>
+            <div class="mt-2 p-3 bg-slate-900/60 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-200">
+              ${q.problem}
+            </div>
+          </div>
+
+          <div class="bg-blue-950/30 border border-blue-500/20 rounded-xl p-3 flex items-start gap-2.5">
+            <i data-lucide="lightbulb" class="w-4 h-4 text-amber-400 mt-0.5 shrink-0"></i>
+            <p class="text-xs text-slate-300 leading-relaxed"><b>Quick Concept:</b> ${q.intuition}</p>
+          </div>
+
+          <!-- SOLUTION TOGGLE ACCORDION -->
+          <div>
+            <button onclick="toggleSolution(${q.id})" class="w-full bg-slate-700/40 hover:bg-slate-700/70 border border-slate-700 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-between text-slate-200 transition">
+              <span class="flex items-center gap-2">
+                <i data-lucide="chevron-down" id="arrow-${q.id}" class="w-4 h-4 transition-transform duration-200"></i>
+                <span>View Step-by-Step Solution</span>
+              </span>
+              <span class="text-[11px] text-slate-400 font-normal">Click to Expand</span>
+            </button>
+
+            <div id="solution-${q.id}" class="hidden mt-3 space-y-3 pt-2">
+              ${stepsHtml}
+
+              <!-- Final Boxed Answer -->
+              <div class="bg-gradient-to-r from-emerald-950/50 to-slate-900 border border-emerald-500/40 rounded-xl p-3.5 flex items-start gap-3">
+                <span class="text-emerald-400 font-bold text-base">🎯</span>
+                <div>
+                  <div class="text-xs font-bold uppercase tracking-wider text-emerald-400">Final Boxed Answer</div>
+                  <div class="text-xs sm:text-sm font-semibold text-white mt-0.5">${q.answer}</div>
+                </div>
+              </div>
+
+              <!-- Examiner's Trap -->
+              <div class="bg-amber-950/20 border border-amber-500/20 rounded-xl p-3 flex items-start gap-2.5 text-xs text-amber-300/90">
+                <span class="font-bold text-amber-400">⚠️ Examiner's Trap:</span>
+                <span>${q.trap}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      lucide.createIcons();
+      if (window.renderMathInElement) {
+        renderMathInElement(container, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+      updateProgress();
+    }
+
+    function toggleSolution(id) {
+      const sol = document.getElementById(`solution-${id}`);
+      const arrow = document.getElementById(`arrow-${id}`);
+      if (sol.classList.contains('hidden')) {
+        sol.classList.remove('hidden');
+        arrow.classList.add('rotate-180');
+      } else {
+        sol.classList.add('hidden');
+        arrow.classList.remove('rotate-180');
+      }
+    }
+
+    function toggleMastered(id) {
+      if (masteredIds.has(id)) {
+        masteredIds.delete(id);
+      } else {
+        masteredIds.add(id);
+      }
+      localStorage.setItem('em_mastered_ids', JSON.stringify([...masteredIds]));
+      renderQuestions();
+    }
+
+    function updateProgress() {
+      const count = masteredIds.size;
+      const total = questionsData.length;
+      const pct = Math.round((count / total) * 100);
+      document.getElementById('progress-text').innerText = `${count} / ${total}`;
+      document.getElementById('progress-bar').style.width = `${pct}%`;
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.add('bg-slate-800', 'text-slate-300');
+      });
+      const activeBtn = document.getElementById(`btn-${filter}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
+        activeBtn.classList.add('bg-blue-600', 'text-white');
+      }
+      renderQuestions();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('search-input').value;
+      renderQuestions();
+    }
+
+    function toggleModal(modalId) {
+      const m = document.getElementById(modalId);
+      m.classList.toggle('hidden');
+      if (!m.classList.contains('hidden') && window.renderMathInElement) {
+        renderMathInElement(m, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQuestions();
+    });
+  </script>
+</body>
+</html>
